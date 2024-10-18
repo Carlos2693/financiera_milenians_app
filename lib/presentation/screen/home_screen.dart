@@ -35,7 +35,12 @@ class HomeScreenView extends StatelessWidget {
   }
 }
 
-class _AmountGrid extends StatelessWidget {
+class _AmountGrid extends StatefulWidget {
+  @override
+  State<_AmountGrid> createState() => _AmountGridState();
+}
+
+class _AmountGridState extends State<_AmountGrid> {
   final List<double> amounts = [1000.0, 5000.0, 10000.0, 15000.0, 20000.0];
   final Map<int, List<double>> mapFactors = {
     1000: [3.5, 4.5, 5.5, 6.0],
@@ -50,6 +55,12 @@ class _AmountGrid extends StatelessWidget {
     decimalDigits: 2,
     name: '\$',
   );
+
+  @override
+  void initState() {
+    updatePosition(context, 0);
+    super.initState();
+  }
 
   void updatePosition(BuildContext context, int position) {
     final amount = amounts[position];
