@@ -6,20 +6,19 @@ part 'profit_state.dart';
 
 class ProfitBloc extends Bloc<ProfitEvent, ProfitState> {
   
-  ProfitBloc(): super(const ProfitState(initAmount: 00, finalAmount: 0.0)) {
-    on<ProfitUpdated>(_onProfitCalculate);
+  ProfitBloc(): super(const ProfitState(position: 0)) {
+    on<ProfitPosition>(_onProfitUpdatePosition);
   }
 
-  void _onProfitCalculate(ProfitUpdated event, Emitter<ProfitState> emit) {
+  void _onProfitUpdatePosition(ProfitPosition event, Emitter<ProfitState> emit) {
     emit(
       state.copyWith(
-        initAmount: state.initAmount + 1,
-        finalAmount: state.finalAmount + 1,
+        position: event.position,
       )
     );
   }
 
-  void increaseBy([double value = 1.0]) {
-    add(ProfitUpdated(value));
+  void updatePosition(int position) {
+    add(ProfitPosition(position));
   }
 }

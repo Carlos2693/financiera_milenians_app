@@ -2,22 +2,18 @@ part of 'profit_bloc.dart';
 
 class ProfitState extends Equatable {
 
-  final double initAmount;
-  final double finalAmount;
+  final int position;
 
   const ProfitState({
-    required this.initAmount,
-    required this.finalAmount,
+    required this.position,
   });
 
   ProfitState copyWith({
-    double? initAmount,
-    double? finalAmount,
+    int? position,
   }) => ProfitState(
-    initAmount: initAmount ?? this.initAmount,
-    finalAmount: finalAmount ?? this.finalAmount,
+    position: position ?? this.position,
   );
 
   @override
-  List<Object?> get props => [initAmount, finalAmount];
+  List<Object?> get props => [position];
 }

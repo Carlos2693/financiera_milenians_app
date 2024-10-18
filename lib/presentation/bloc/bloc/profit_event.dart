@@ -4,10 +4,10 @@ abstract class ProfitEvent {
   const ProfitEvent();
 }
 
-class ProfitUpdated extends ProfitEvent {
-  final double value;
+class ProfitPosition extends ProfitEvent {
+  final int position;
 
-  const ProfitUpdated(this.value);
+  const ProfitPosition(this.position);
 }
 
 // class CounterReset extends CounterEvent {}
