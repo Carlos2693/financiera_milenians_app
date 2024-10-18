@@ -27,7 +27,9 @@ class HomeScreenView extends StatelessWidget {
 
     return Scaffold(
       body: SafeArea(
-        child: _AmountGrid(),
+        child: Column(
+          children: [_AmountGrid(), _ProfitList()],
+        ),
       ),
     );
   }
@@ -35,12 +37,26 @@ class HomeScreenView extends StatelessWidget {
 
 class _AmountGrid extends StatelessWidget {
   final List<double> amounts = [1000.0, 5000.0, 10000.0, 15000.0, 20000.0];
+  final Map<int, List<double>> mapFactors = {
+    1000: [3.5, 4.5, 5.5, 6.0],
+    5000: [3.5, 4.5, 5.5, 7.0],
+    10000: [4.5, 4.5, 5.5, 8.0],
+    15000: [5.5, 6.5, 7.5, 8.8],
+    20000: [6.5, 7.5, 8.5, 9.0],
+  };
   final int numColumns = 3;
   final currentFormat = NumberFormat.simpleCurrency(
-      locale: 'es_MX', decimalDigits: 2, name: '\$');
+    locale: 'es_MX',
+    decimalDigits: 2,
+    name: '\$',
+  );
 
   void updatePosition(BuildContext context, int position) {
-    context.read<ProfitBloc>().updatePosition(position);
+    final amount = amounts[position];
+    final factors = mapFactors[amount];
+    if (factors != null) {
+      context.read<ProfitBloc>().updatePosition(position, amount, factors);
+    }
   }
 
   @override
@@ -71,5 +87,56 @@ class _AmountGrid extends StatelessWidget {
         }),
       ),
     );
+  }
+}
+
+class _ProfitList extends StatelessWidget {
+  final factorByMonts = 3;
+  final currentFormat = NumberFormat.simpleCurrency(
+    locale: 'es_MX',
+    decimalDigits: 2,
+    name: '\$',
+  );
+
+  @override
+  Widget build(BuildContext context) {
+    return context.select((ProfitBloc profitBloc) {
+      final amounts = profitBloc.state.amounts;
+      const textStyle = TextStyle(fontWeight: FontWeight.bold);
+
+      return Column(
+        children: [
+          const Text('Ganancias', style: textStyle),
+          ...List.generate(amounts.length, (index) {
+            final startAmount = amounts[index].startAmount;
+            final finalAmount = amounts[index].finalAmount;
+            final monthText = factorByMonts * (index + 1);
+
+            final textByMonts =
+                Text('Por cada $monthText mes', style: textStyle);
+
+            return Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                Column(
+                  children: [
+                    const Text('Por cada mes', style: textStyle),
+                    textByMonts,
+                    Text(currentFormat.format(startAmount)),
+                  ],
+                ),
+                Column(
+                  children: [
+                    const Text('Ganancial total', style: textStyle),
+                    textByMonts,
+                    Text(currentFormat.format(finalAmount)),
+                  ],
+                )
+              ],
+            );
+          }),
+        ],
+      );
+    });
   }
 }

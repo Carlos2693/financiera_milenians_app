@@ -6,8 +6,8 @@ abstract class ProfitEvent {
 
 class ProfitPosition extends ProfitEvent {
   final int position;
+  final double amount;
+  final List<double> factors;
 
-  const ProfitPosition(this.position);
+  const ProfitPosition(this.position, this.amount, this.factors);
 }
-
-// class CounterReset extends CounterEvent {}
