@@ -2,8 +2,8 @@ import 'package:financiera_milenians_app/presentation/screen/screens.dart';
 import 'package:flutter/material.dart';
 
 class MainScreen extends StatefulWidget {
-  static const String nameProfitTab = 'Profit';
   static const String nameCardsTab = 'Cards';
+  static const String nameProfitTab = 'Profit';
   
   const MainScreen({super.key});
 
@@ -15,8 +15,8 @@ class _MainScreenState extends State<MainScreen> {
   int selectedIndex = 0;
 
   final Map<String, IconData> mapBottomNavigationData = {
-    MainScreen.nameProfitTab: Icons.savings,
     MainScreen.nameCardsTab: Icons.credit_card,
+    MainScreen.nameProfitTab: Icons.savings,
   };
 
   @override
@@ -26,8 +26,8 @@ class _MainScreenState extends State<MainScreen> {
         child: IndexedStack(
           index: selectedIndex,
           children: const [
-            ProfitScreen(),
             CardsScreen(),
+            ProfitScreen(),
           ],
         ),
       ),
