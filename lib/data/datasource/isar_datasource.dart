@@ -1,4 +1,4 @@
-import 'package:financiera_milenians_app/domain/card.dart';
+import 'package:financiera_milenians_app/domain/entity/card.dart';
 import 'package:isar/isar.dart';
 
 import 'package:financiera_milenians_app/domain/datasource/local_storage_datasource.dart';
