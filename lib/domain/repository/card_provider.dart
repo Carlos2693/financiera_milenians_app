@@ -1,8 +1,8 @@
-import 'package:financiera_milenians_app/presentation/provider/storage/local_storage_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:financiera_milenians_app/domain/entity/card.dart';
 import 'package:financiera_milenians_app/domain/repository/local_storage_repository.dart';
+import 'package:financiera_milenians_app/presentation/provider/storage/local_storage_provider.dart';
 
 final cardsProvider =
   StateNotifierProvider<CardStorageNotifier, Map<String, CardModel>>((ref) {
@@ -30,7 +30,18 @@ class CardStorageNotifier extends StateNotifier<Map<String, CardModel>> {
     return cards;
   }
 
-  Future<void> registerCard(CardModel cardModel) async {
+  Future<void> registerCard(
+    String alias,
+    String ownerName,
+    String nameBank,
+    String cardNumber,
+  ) async {
+    final cardModel = CardModel(
+      alias: alias,
+      ownerName: ownerName,
+      nameBank: nameBank,
+      cardNumber: cardNumber,
+    );
     await localStorageRepository.registerCard(cardModel);
 
     state = {...state, cardModel.cardNumber: cardModel};
