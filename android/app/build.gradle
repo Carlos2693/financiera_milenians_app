@@ -5,18 +5,24 @@ plugins {
     id "dev.flutter.flutter-gradle-plugin"
 }
 
+def properties = new Properties()
+file("../local.properties").withInputStream { properties.load(it) }
+def flutterNDK = properties.getProperty("flutter.ndkVersion")
+def flutterCode = properties.getProperty("flutter.versionCode")
+def flutterName = properties.getProperty("flutter.versionName")
+
 android {
     namespace = "com.example.financiera_milenians_app"
     compileSdk = flutter.compileSdkVersion
-    ndkVersion = flutter.ndkVersion
+    ndkVersion = flutterNDK
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
 
     kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_1_8
+        jvmTarget = 17
     }
 
     defaultConfig {
@@ -26,8 +32,8 @@ android {
         // For more information, see: https://flutter.dev/to/review-gradle-config.
         minSdk = flutter.minSdkVersion
         targetSdk = flutter.targetSdkVersion
-        versionCode = flutter.versionCode
-        versionName = flutter.versionName
+        versionCode = flutterCode
+        versionName = flutterName
     }
 
     buildTypes {
