@@ -7,13 +7,19 @@ import 'package:financiera_milenians_app/presentation/provider/storage/card_form
 import 'package:financiera_milenians_app/presentation/widget/textfields.dart';
 
 class RegisterCardScreen extends ConsumerWidget {
-  const RegisterCardScreen({super.key});
+  final String cardId;
+
+  const RegisterCardScreen({super.key, required this.cardId});
 
   _showSnackBar(BuildContext context, String message) {
     ScaffoldMessenger.of(context).hideCurrentSnackBar();
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(content: Text(message))
     );
+  }
+
+  String _getTitleAppBar() {
+    return cardId == "new" ? "Agregar tarjeta" : "Modificar tarjeta";
   }
 
   @override
@@ -35,7 +41,7 @@ class RegisterCardScreen extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Agregar tarjeta'),
+        title: Text(_getTitleAppBar()),
         leading: IconButton(
           onPressed: () => context.pop(),
           icon: const Icon(Icons.arrow_back, color: Colors.black),

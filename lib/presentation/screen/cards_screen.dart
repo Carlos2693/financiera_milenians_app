@@ -1,9 +1,10 @@
-import 'package:financiera_milenians_app/config/constant/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:go_router/go_router.dart';
 
+import 'package:financiera_milenians_app/config/constant/constant.dart';
+import 'package:financiera_milenians_app/domain/entity/card.dart';
 import 'package:financiera_milenians_app/domain/repository/card_provider.dart';
 
 class CardsScreen extends ConsumerStatefulWidget {
@@ -49,37 +50,14 @@ class CardsScreenState extends ConsumerState<CardsScreen>
               final card = cardList[index];
               final cardNumber = card.cardNumber;
 
-              return ListTile(
-                title: Text(
-                  Constant.mask +  card.cardNumber.substring(cardNumber.length - 4),
-                  style: const TextStyle(fontSize: 18.0)
-                ),
-                subtitle: Text(
-                  card.alias,
-                  style: const TextStyle(fontSize: 16.0)
-                ),
-                trailing: Container(
-                  decoration: BoxDecoration(
-                    color: Colors.blue.shade100,
-                    borderRadius: BorderRadius.circular(30.0),
-                    border: Border.all(color: Colors.transparent)
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 8.0),
-                    child: Text(
-                      card.nameBank,
-                      style: const TextStyle(fontSize: 16.0),
-                    ),
-                  ),
-                )
-              );
+              return _ListItemCard(card: card, cardNumber: cardNumber);
             },
           );
         },
       ),
       floatingActionButton: FloatingActionButton.extended(
         backgroundColor: Colors.blue,
-        onPressed: () => context.push('/register_card'),
+        onPressed: () => {context.push('/register_card/new')},
         label: const Text(
           'Agregar',
           style: TextStyle(color: Colors.white),
@@ -88,7 +66,67 @@ class CardsScreenState extends ConsumerState<CardsScreen>
       ),
     );
   }
-  
+
   @override
   bool get wantKeepAlive => true;
+}
+
+class _ListItemCard extends StatelessWidget {
+  static String bankPrefix = "Banco";
+
+  final CardModel card;
+  final String cardNumber;
+
+  const _ListItemCard({
+    required this.card,
+    required this.cardNumber,
+  });
+
+  TextStyle _textStyleFontSize(double fontSize) {
+    return TextStyle(fontSize: fontSize);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: Row(
+        children: [
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  card.alias,
+                  style: _textStyleFontSize(20),
+                ),
+                Text(
+                  Constant.mask + card.cardNumber.substring(cardNumber.length - 4),
+                  style: _textStyleFontSize(20),
+                ),
+                Text(
+                  '$bankPrefix ${card.nameBank}',
+                  style: _textStyleFontSize(16),
+                ),
+              ],
+            ),
+          ),
+          IconButton.filled(
+            onPressed: () {
+              // WIP
+            },
+            style: IconButton.styleFrom(backgroundColor: Colors.blue),
+            icon: const Icon(Icons.edit),
+          ),
+          IconButton.filled(
+            onPressed: () {
+              // WIP
+            },
+            style: IconButton.styleFrom(backgroundColor: Colors.blue),
+            icon: const Icon(Icons.delete),
+          ),
+        ],
+      ),
+    );
+  }
 }

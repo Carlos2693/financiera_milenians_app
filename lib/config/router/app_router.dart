@@ -9,8 +9,11 @@ final appRouter = GoRouter(
       builder: (context, state) => const MainScreen(),
     ),
     GoRoute(
-      path: '/register_card',
-      builder: (context, state) => const RegisterCardScreen(),
+      path: '/register_card/:id',
+      builder: (context, state) {
+        final cardId = state.pathParameters['id'] ?? 'no-id';
+        return RegisterCardScreen(cardId : cardId);
+      }
     )
   ]
 );
