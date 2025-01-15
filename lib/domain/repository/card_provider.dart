@@ -5,27 +5,22 @@ import 'package:financiera_milenians_app/domain/repository/local_storage_reposit
 import 'package:financiera_milenians_app/presentation/provider/storage/local_storage_provider.dart';
 
 final cardsProvider =
-  StateNotifierProvider<CardStorageNotifier, Map<String, CardModel>>((ref) {
+  StateNotifierProvider<CardStorageNotifier, List<CardModel>>((ref) {
     final localStorageRepository = ref.watch(localStorageRepositoryProvider);
     return CardStorageNotifier(localStorageRepository: localStorageRepository);
   }
 );
 
-class CardStorageNotifier extends StateNotifier<Map<String, CardModel>> {
+class CardStorageNotifier extends StateNotifier<List<CardModel>> {
 
   final LocalStorageRepository localStorageRepository;
 
-  CardStorageNotifier({required this.localStorageRepository}) : super({});
+  CardStorageNotifier({required this.localStorageRepository}) : super([]);
 
   Future<List<CardModel>> loadCards() async {
     final cards = await localStorageRepository.loadCards();
 
-    final tempCardsMap = <String, CardModel>{};
-    for (final card in cards) {
-      tempCardsMap[card.cardNumber] = card;
-    }
-
-    state = {...state, ...tempCardsMap};
+    state = [...state, ...cards];
 
     return cards;
   }
@@ -44,6 +39,6 @@ class CardStorageNotifier extends StateNotifier<Map<String, CardModel>> {
     );
     await localStorageRepository.registerCard(cardModel);
 
-    state = {...state, cardModel.cardNumber: cardModel};
+    state = [... state, cardModel];
   }
 }

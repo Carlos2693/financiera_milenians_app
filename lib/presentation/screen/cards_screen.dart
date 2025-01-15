@@ -30,7 +30,7 @@ class CardsScreenState extends ConsumerState<CardsScreen>
   Widget build(BuildContext context) {
     super.build(context);
 
-    final cardList = ref.watch(cardsProvider).values.toList();
+    final cardList = ref.watch(cardsProvider);
     return Scaffold(
       appBar: AppBar(
         title: const Text('Tarjetas registradas'),
