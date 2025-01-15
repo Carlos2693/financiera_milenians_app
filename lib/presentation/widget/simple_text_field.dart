@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class SimpleTextField extends StatelessWidget {
+  final String initialValue;
   final String hinttext;
   final String? errorMessage;
   final Function(String)? onChanged;
@@ -11,6 +12,7 @@ class SimpleTextField extends StatelessWidget {
 
   const SimpleTextField({
     super.key,
+    this.initialValue = '',
     required this.hinttext,
     this.errorMessage,
     this.onChanged,
@@ -23,7 +25,8 @@ class SimpleTextField extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-      child: TextField(
+      child: TextFormField(
+        initialValue: initialValue,
         onChanged: onChanged,
         maxLength: maxLenght,
         maxLengthEnforcement: MaxLengthEnforcement.enforced,
@@ -33,7 +36,7 @@ class SimpleTextField extends StatelessWidget {
           errorText: errorMessage,
         ),
         textInputAction: textInputAction,
-        onSubmitted: onSubmitted,
+        // onFieldSubmitted: onSubmitted,
       ),
     );
   }
