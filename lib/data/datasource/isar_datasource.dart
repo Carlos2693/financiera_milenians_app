@@ -37,4 +37,10 @@ class IsarDatasource extends LocalStorageDatasource {
       ()=> isar.cardModels.putSync(cardModel)
     );
   }
+  
+  @override
+  Future<CardModel?> getCardModelById(int cardId) async {
+    final isar = await db;
+    return await isar.cardModels.get(cardId);
+  }
 }

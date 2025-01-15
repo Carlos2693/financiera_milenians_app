@@ -17,4 +17,9 @@ class LocalStorageRepositoryImpl extends LocalStorageRepository {
   Future<void> registerCard(CardModel cardModel) {
     return datasource.registerCard(cardModel);
   }
+  
+  @override
+  Future<CardModel?> getCardModelById(int cardId) {
+    return datasource.getCardModelById(cardId);
+  }
 }
