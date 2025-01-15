@@ -57,7 +57,7 @@ class CardsScreenState extends ConsumerState<CardsScreen>
       ),
       floatingActionButton: FloatingActionButton.extended(
         backgroundColor: Colors.blue,
-        onPressed: () => {context.push('/register_card/new')},
+        onPressed: () => context.push('/register_card/new'),
         label: const Text(
           'Agregar',
           style: TextStyle(color: Colors.white),
@@ -112,9 +112,7 @@ class _ListItemCard extends StatelessWidget {
             ),
           ),
           IconButton.filled(
-            onPressed: () {
-              // WIP
-            },
+            onPressed: () => context.push('/register_card/${card.id}'),
             style: IconButton.styleFrom(backgroundColor: Colors.blue),
             icon: const Icon(Icons.edit),
           ),
