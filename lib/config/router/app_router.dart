@@ -12,7 +12,7 @@ final appRouter = GoRouter(
       path: '/register_card/:id',
       builder: (context, state) {
         final cardId = state.pathParameters['id'] ?? 'no-id';
-        return RegisterCardScreen(cardId : cardId);
+        return ManageCardScreen(cardId : cardId);
       }
     )
   ]
