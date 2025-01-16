@@ -5,7 +5,7 @@ import 'package:go_router/go_router.dart';
 
 import 'package:financiera_milenians_app/config/constant/constant.dart';
 import 'package:financiera_milenians_app/domain/entity/card.dart';
-import 'package:financiera_milenians_app/domain/repository/card_provider.dart';
+import 'package:financiera_milenians_app/presentation/provider/cards_provider.dart';
 
 class CardsScreen extends ConsumerStatefulWidget {
   const CardsScreen({super.key});

@@ -2,9 +2,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:formz/formz.dart';
 
+import 'package:financiera_milenians_app/presentation/provider/cards_provider.dart';
 import 'package:financiera_milenians_app/presentation/model/input/inputs.dart';
-import 'package:financiera_milenians_app/domain/repository/card_provider.dart';
 
+// REGISTER SCREEN
 final cardFormProvider =
   StateNotifierProvider.autoDispose<CardFormNotifier, CardFormState>((ref) {
     final cardFormCallback = ref.watch(cardsProvider.notifier).registerCard;
