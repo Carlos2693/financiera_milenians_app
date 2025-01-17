@@ -16,4 +16,21 @@ class CardModel {
     required this.nameBank,
     required this.cardNumber,
   });
+
+  CardModel copyWith({
+    int? id,
+    String? alias,
+    String? ownerName,
+    String? nameBank,
+    String? cardNumber,
+  }) {
+    final cardModel = CardModel(
+      alias: alias ?? this.alias,
+      ownerName: ownerName ?? this.ownerName,
+      nameBank: nameBank ?? this.nameBank,
+      cardNumber: cardNumber ?? this.cardNumber,
+    );
+    cardModel.id = id;
+    return cardModel;
+  }
 }

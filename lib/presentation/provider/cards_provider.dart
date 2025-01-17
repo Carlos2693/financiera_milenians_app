@@ -25,20 +25,33 @@ class CardStorageNotifier extends StateNotifier<List<CardModel>> {
     return cards;
   }
 
-  Future<void> registerCard(
-    String alias,
-    String ownerName,
-    String nameBank,
-    String cardNumber,
-  ) async {
+  Future<bool> registerCard(Map<String, dynamic> cardLike) async {
     final cardModel = CardModel(
-      alias: alias,
-      ownerName: ownerName,
-      nameBank: nameBank,
-      cardNumber: cardNumber,
+      alias: cardLike['alias'],
+      cardNumber: cardLike['cardNumber'],
+      nameBank: cardLike['nameBank'],
+      ownerName: cardLike['ownerName'],
     );
-    await localStorageRepository.registerCard(cardModel);
+    final cardId = await localStorageRepository.registerCard(cardModel);
 
-    state = [... state, cardModel];
+    if (cardId != null) {
+      final isCardInList = state.any((item) => item.id == cardId);
+
+      if (!isCardInList) {
+        state = [...state, cardModel];
+        return true;
+      }
+
+      state.map((item) {
+        if (item.id == cardId) {
+          return cardModel.copyWith(id: cardId);
+        } else {
+          return item;
+        }
+      }).toList();
+
+      return true;
+    }
+    return false;
   }
 }

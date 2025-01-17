@@ -31,11 +31,12 @@ class IsarDatasource extends LocalStorageDatasource {
   }
 
   @override
-  Future<void> registerCard(CardModel cardModel) async {
+  Future<int?> registerCard(CardModel cardModel) async {
     final isar = await db;
-    isar.writeTxnSync(
-      ()=> isar.cardModels.putSync(cardModel)
-    );
+    return await isar.writeTxn(() async {
+      final id = await isar.cardModels.put(cardModel);
+      return id;
+    });
   }
   
   @override
