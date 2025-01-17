@@ -25,7 +25,7 @@ class CardStorageNotifier extends StateNotifier<List<CardModel>> {
     return cards;
   }
 
-  Future<bool> registerCard(Map<String, dynamic> cardLike) async {
+  Future<void> registerCard(Map<String, dynamic> cardLike) async {
     final cardModel = CardModel(
       alias: cardLike['alias'],
       cardNumber: cardLike['cardNumber'],
@@ -39,7 +39,7 @@ class CardStorageNotifier extends StateNotifier<List<CardModel>> {
 
       if (!isCardInList) {
         state = [...state, cardModel];
-        return true;
+        return;
       }
 
       state.map((item) {
@@ -50,8 +50,8 @@ class CardStorageNotifier extends StateNotifier<List<CardModel>> {
         }
       }).toList();
 
-      return true;
+      return;
     }
-    return false;
+    return;
   }
 }

@@ -19,7 +19,7 @@ final cardFormProvider = StateNotifierProvider.autoDispose.family<CardFormNotifi
 );
 
 class CardFormNotifier extends StateNotifier<CardFormState> {
-  final Future<bool> Function(Map<String, dynamic> cardLike)? onSubmitCallback;
+  final Future<void> Function(Map<String, dynamic> cardLike)? onSubmitCallback;
 
   CardFormNotifier({
     required CardModel cardModel,

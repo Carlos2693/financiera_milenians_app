@@ -36,7 +36,6 @@ class SimpleTextField extends StatelessWidget {
           errorText: errorMessage,
         ),
         textInputAction: textInputAction,
-        // onFieldSubmitted: onSubmitted,
       ),
     );
   }

@@ -56,8 +56,7 @@ class CardNotifier extends StateNotifier<CardState> {
         );
       }
     } catch (ex) {
-      // 404 card not found
-      print(ex);
+      ex.toString();
     }
   }
 }
