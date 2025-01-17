@@ -10,20 +10,24 @@ final cardFormProvider = StateNotifierProvider.autoDispose.family<CardFormNotifi
   (ref, cardModel) {
 
     final registerCardCallback = ref.watch(cardsProvider.notifier).registerCard;
+    final deleteCardCallback = ref.watch(cardsProvider.notifier).deleteCard;
 
     return CardFormNotifier(
       cardModel: cardModel,
       onSubmitCallback: registerCardCallback,
+      deleteCardCallback: deleteCardCallback,
     );
   }
 );
 
 class CardFormNotifier extends StateNotifier<CardFormState> {
   final Future<void> Function(Map<String, dynamic> cardLike)? onSubmitCallback;
+  final Future<void> Function(int id)? deleteCardCallback;
 
   CardFormNotifier({
     required CardModel cardModel,
     this.onSubmitCallback,
+    this.deleteCardCallback,
   }): super(
     CardFormState(
       id: '${cardModel.id}',
@@ -33,6 +37,12 @@ class CardFormNotifier extends StateNotifier<CardFormState> {
       ownerName: OwnerName.dirty(cardModel.ownerName),
     )
   );
+
+  Future<void> onCardDelete(int id) async {
+    if (deleteCardCallback != null) {
+      await deleteCardCallback!(id);
+    }
+  }
 
   Future<void> onFormSubmit() async {
     _touchedEverything();

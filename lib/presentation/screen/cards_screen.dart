@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 import 'package:financiera_milenians_app/config/constant/constant.dart';
 import 'package:financiera_milenians_app/domain/entity/card.dart';
 import 'package:financiera_milenians_app/presentation/provider/cards_provider.dart';
+import 'package:financiera_milenians_app/presentation/provider/form/card_form_provider.dart';
 
 class CardsScreen extends ConsumerStatefulWidget {
   const CardsScreen({super.key});
@@ -48,9 +49,8 @@ class CardsScreenState extends ConsumerState<CardsScreen>
             itemBuilder: (context, index) {
 
               final card = cardList[index];
-              final cardNumber = card.cardNumber;
 
-              return _ListItemCard(card: card, cardNumber: cardNumber);
+              return _ListItemCard(card: card);
             },
           );
         },
@@ -71,15 +71,13 @@ class CardsScreenState extends ConsumerState<CardsScreen>
   bool get wantKeepAlive => true;
 }
 
-class _ListItemCard extends StatelessWidget {
+class _ListItemCard extends ConsumerWidget {
   static String bankPrefix = "Banco";
 
   final CardModel card;
-  final String cardNumber;
 
   const _ListItemCard({
     required this.card,
-    required this.cardNumber,
   });
 
   TextStyle _textStyleFontSize(double fontSize) {
@@ -87,7 +85,7 @@ class _ListItemCard extends StatelessWidget {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Row(
@@ -101,7 +99,8 @@ class _ListItemCard extends StatelessWidget {
                   style: _textStyleFontSize(20),
                 ),
                 Text(
-                  Constant.mask + card.cardNumber.substring(cardNumber.length - 4),
+                  Constant.mask +
+                      card.cardNumber.substring(card.cardNumber.length - 4),
                   style: _textStyleFontSize(20),
                 ),
                 Text(
@@ -118,7 +117,10 @@ class _ListItemCard extends StatelessWidget {
           ),
           IconButton.filled(
             onPressed: () {
-              // WIP
+              final cardId = card.id;
+              if (cardId != null) {
+                ref.read(cardFormProvider(card).notifier).onCardDelete(cardId);
+              }
             },
             style: IconButton.styleFrom(backgroundColor: Colors.blue),
             icon: const Icon(Icons.delete),

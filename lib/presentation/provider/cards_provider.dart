@@ -25,6 +25,15 @@ class CardStorageNotifier extends StateNotifier<List<CardModel>> {
     return cards;
   }
 
+  Future<void> deleteCard(int id) async {
+    final result = await localStorageRepository.deleteCard(id);
+    if (result) {
+      final currentList = state.toList();
+      currentList.removeWhere((item) => item.id == id);
+      state = currentList;
+    }
+  }
+
   Future<void> registerCard(Map<String, dynamic> cardLike) async {
     final cardModel = CardModel(
       alias: cardLike['alias'],

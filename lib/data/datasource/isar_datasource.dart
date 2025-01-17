@@ -38,6 +38,15 @@ class IsarDatasource extends LocalStorageDatasource {
       return id;
     });
   }
+
+  @override
+  Future<bool> deleteCard(int id) async {
+    final isar = await db;
+    return await isar.writeTxn(() async {
+      final abc = await isar.cardModels.delete(id);
+      return abc;
+    });
+  }
   
   @override
   Future<CardModel?> getCardModelById(int cardId) async {

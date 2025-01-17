@@ -3,6 +3,7 @@ import 'package:financiera_milenians_app/domain/entity/card.dart';
 
 abstract class LocalStorageRepository {
   Future<int?> registerCard(CardModel cardModel);
+  Future<bool> deleteCard(int id);
   Future<List<CardModel>> loadCards();
   Future<CardModel?> getCardModelById(int cardId);
 }
